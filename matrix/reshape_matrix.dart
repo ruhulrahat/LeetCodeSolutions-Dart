@@ -52,3 +52,28 @@ void main() {
 // Time & Space Complexity
 // Time	O(m * n)
 // Space	O(r * c)
+
+List<List<int>> matrixReshapeUsingFlatIndexMapping(
+    List<List<int>> mat, int r, int c) {
+  int m = mat.length;
+  int n = mat[0].length;
+
+  // Total elements must match
+  if (m * n != r * c) return mat;
+
+  List<List<int>> result = List.generate(r, (_) => List.filled(c, 0));
+
+  for (int i = 0; i < m * n; i++) {
+    int originalRow = i ~/ n;
+    int originalCol = i % n;
+
+    int newRow = i ~/ c;
+    int newCol = i % c;
+
+    result[newRow][newCol] = mat[originalRow][originalCol];
+  }
+
+  return result;
+}
+// Time: O(m * n)
+// Space: O(r * c) (new matrix)
